@@ -74,6 +74,8 @@ def register_routes(app):
         return redirect(url_for('login'))
 
     @app.route('/gestionar_usuarios', methods=['GET', 'POST'])
+    @login_required
+    @jefe_taller_required  # Solo el Jefe de Taller puede acceder
     def gestionar_usuarios():
         if request.method == 'POST':
             nombre_usuario = request.form['nombre_usuario']
@@ -98,6 +100,8 @@ def register_routes(app):
         
 
     @app.route('/editar_usuario/<int:id>', methods=['GET', 'POST'])
+    @login_required
+    @jefe_taller_required  # Solo el Jefe de Taller puede acceder
     def editar_usuario(id):
         usuario = Usuario.query.get_or_404(id)
 

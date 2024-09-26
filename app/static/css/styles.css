@@ -437,3 +437,13 @@ footer p {
         padding: 10px; /* Ajusto el padding para que se vea bien en móvil */
     }
 }
+
+
+@media print {
+    .filter-container {
+        display: none !important; /* Ocultar el contenedor  al imprimir */
+    }
+    header nav {
+        display: none !important; /* Ocultar el contenedor  al imprimir */
+    }
+}
