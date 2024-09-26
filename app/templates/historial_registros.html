@@ -1,0 +1,41 @@
+<!-- app/templates/historial_registros.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="table-container">
+    <h3>Registros Eliminados</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Tarea</th>
+                <th>Fecha y Hora</th>
+                <th>Trabajador</th>
+                <th>Proyecto</th>
+                <th>Tarea</th>
+                <th>Horas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for registro in registros %}
+            <tr>
+                <td>{{ registro.ID_tarea }}</td>
+                <td>{{ registro.fecha_hora }}</td>
+                <td>{{ registro.trabajador.nombre_trabajador }} {{ registro.trabajador.apellido1_trabajador }}</td>
+                <td>{{ registro.proyecto.nombre_proyecto }}</td>
+                <td>{{ registro.tarea }}</td>
+                <td>{{ registro.horas }}</td>
+                {% if registro.eliminado == 1 %}
+                <td>
+                    <form method="POST" action="{{ url_for('recuperar_registro', id=registro.ID_tarea) }}" onsubmit="return confirm('¿Estás seguro de que deseas recuperar este registro?');">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit">Recuperar Registro</button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

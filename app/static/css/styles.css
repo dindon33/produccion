@@ -1,0 +1,439 @@
+/*<!-- app/static/css/styles.css -->*/
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+    padding: 0 10px;
+}
+
+h1, h2, h3 {
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+/* Header */
+header {
+    background-color: #005757;
+    color: #fff;
+    padding: 20px 0;
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+header nav {
+    margin-top: 15px;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+header nav ul li {
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    display: inline-block;
+    padding: 10px;
+    border: none;
+    background-color: #009B9B;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.1s ease;
+    text-decoration: none;
+    text-align: center;
+}
+
+/* Estilos para el enlace activo */
+nav ul li a.active {
+    background-color: #E0FFFF;
+    color: #005757;
+    font-weight: bold;
+}
+
+header nav ul li a:hover {
+    background-color: #FFD700;
+    color: #005757;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.header-container img.logo {
+    width: 225px;
+    height: auto;
+    position: absolute;
+    left: 20px;
+}
+
+.header-container h1 {
+    font-size: 2.5rem;
+    color: #fff;
+    margin: 0 auto;
+}
+
+/* Main */
+main {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+main h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+hr {
+    margin-bottom: 10px;
+}
+
+/* Form Container */
+.form-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.form-container form div {
+    margin-bottom: 15px;
+}
+
+.form-container label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-container input, 
+.form-container select, 
+.form-container textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #009B9B;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.1s ease;
+    margin-bottom: 10px;
+}
+
+.form-container button:hover {
+    background-color: #FFD700;
+}
+
+/* Filter Container */
+.filter {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+/* Estilos individuales para cada contenedor dentro del filtro */
+.filter-container, .filter-result {
+    width: 49%;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.filter-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-container div {
+    margin-bottom: 15px;
+}
+
+.filter-container label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.filter-container input, 
+.filter-container select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.filter-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #009B9B;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.1s ease;
+    margin-bottom: 10px;
+}
+
+.filter-container button:hover {
+    background-color: #FFD700;
+}
+
+/* Table Container */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.table-container th, 
+.table-container td {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-container th {
+    background-color: #005757;
+    color: white;
+    font-weight: bold;
+}
+
+.table-container td {
+    color: #333;
+}
+
+/* Estilos para las filas alternas (zebra striping) */
+.table-container tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table-container tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Efecto hover para resaltar la fila */
+.table-container tr:hover {
+    background-color: #E0FFFF;
+    transition: background-color 0.1s ease;
+}
+
+.table-container button {
+    width: 100%;
+    padding: 5px;
+    background-color: #009B9B;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.1s ease;
+    margin-bottom: 0px;
+}
+
+.table-container button:hover {
+    background-color: #FFD700;
+}
+
+.delete-button button {
+    background-color: red;
+}
+
+.delete-button button:hover {
+    background-color: lightcoral;
+}
+
+nav .delete-button {
+    background-color: red; /* Color de fondo */
+}
+
+nav .delete-button:hover {
+    background-color: lightcoral; /* Color de fondo al pasar el ratón */
+}
+
+/* Estilos para mensajes flash */
+.flash-message {
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.flash-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.flash-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.flash-message.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.flash-message.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+/* Footer */
+footer {
+    background-color: #005757;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 30px;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Media Queries */
+@media (max-width: 1200px) {
+    header nav ul {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    header nav ul li {
+        margin-bottom: 10px;
+    }
+
+    header nav ul li a {
+        display: block;
+        padding: 5px;
+        text-align: center; /* Centrar el texto dentro de los botones */
+        width: 100%; /* Aseguro que el botón ocupe el 100% del ancho del li */
+        font-size: 1.1rem;
+    }
+
+    .header-container {
+        flex-direction: column; /* Cambia el layout del header a columna */
+    }
+
+    .header-container h1 {
+        font-size: 1.5rem; /* Reduzco el tamaño para que se ajuste mejor */
+        text-align: center;
+    }
+
+    .header-container img.logo {
+        width: 150px; /* Ajusto el tamaño del logo */
+        position: static; /* Permito que fluya naturalmente en el layout */
+        margin-bottom: 10px; /* Espacio entre el logo y el título */
+    }
+
+    main {
+        margin: 10px 0px;
+        padding: 0px;
+    }
+
+    .filter {
+        flex-direction: column; /* Cambio a columna para dispositivos más pequeños */
+    }
+
+    .filter-container, .filter-result {
+        width: 100%; /* Se expanden para ocupar el 100% en pantallas pequeñas */
+        margin-bottom: 20px; /* Añadir margen entre contenedores */
+    }
+
+    .form-container, .table-container {
+        padding: 15px;
+    }
+
+    .form-container button, 
+    .filter-container button {
+        font-size: 1rem;
+        padding: 12px; /* Ajusto el padding para mejorar la accesibilidad */
+    }
+
+    .form-container input, 
+    .filter-container input, 
+    .form-container select, 
+    .filter-container select, 
+    .form-container textarea {
+        padding: 12px; /* Aumento el padding para un mejor uso táctil */
+        font-size: 1rem; /* Mantengo un tamaño de fuente legible */
+    }
+
+    .table-container {
+        margin-top: 15px; /* Espacio adicional para separación */
+        padding: 10px; /* Reduzco el padding para ajustar el diseño */
+    }
+
+    .table-container th, 
+    .table-container td {
+        padding: 8px;
+        font-size: 0.95rem; /* Ligeramente más pequeño para mejor ajuste */
+    }
+
+    /* Ajustes para botones de tabla */
+    .table-container button {
+        font-size: 0.9rem; /* Tamaño de fuente más pequeño para el botón de la tabla */
+        padding: 8px; /* Ajusto el padding para mayor comodidad */
+    }
+
+    /* Estilo para el mensaje flash en dispositivos móviles */
+    .flash-message {
+        font-size: 0.9rem; /* Tamaño de fuente más pequeño */
+        padding: 10px; /* Ajusto el padding para que se vea bien en móvil */
+    }
+}

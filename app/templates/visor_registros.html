@@ -1,0 +1,162 @@
+<!-- app/templates/visor_registros.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="visor_registros">
+
+    <div class="filter">
+        <div class="filter-container">
+            <form method="GET" action="{{ url_for('visor_registros') }}">
+                <div class="filter-container_trabajador">
+                    <label for="trabajador">Filtrar por Trabajador:</label><br>
+                    <select id="trabajador" name="trabajador">
+                        <option value="">-- Todos --</option>
+                        {% for trabajador in trabajadores %}
+                            <option value="{{ trabajador.ID_trabajador }}" {% if trabajador.ID_trabajador == filtros_aplicados.trabajador.ID_trabajador %}selected{% endif %}>
+                                {{ trabajador.nombre_trabajador }} {{ trabajador.apellido1_trabajador }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+        
+                <div class="filter-container_proyecto">
+                    <label for="proyecto">Filtrar por Proyecto:</label><br>
+                    <select id="proyecto" name="proyecto">
+                        <option value="">-- Todos --</option>
+                        {% for proyecto in proyectos %}
+                            <option value="{{ proyecto.ID_proyecto }}" {% if proyecto.ID_proyecto == filtros_aplicados.proyecto.ID_proyecto %}selected{% endif %}>
+                                {{ proyecto.nombre_proyecto }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+        
+                <div class="filter-container_tarea">
+                    <label for="tarea">Filtrar por Tarea:</label><br>
+                    <input type="text" id="tarea" name="tarea" placeholder="Palabra o frase parcial" value="{{ filtros_aplicados.tarea }}">
+                </div>
+        
+                <div class="filter-container_horas">
+                    <label for="horas">Filtrar por Horas:</label><br>
+                    <input type="number" step="0.01" id="horas" name="horas" placeholder="Cantidad de horas" value="{{ filtros_aplicados.horas }}">
+                    <select name="horas_comparacion">
+                        <option value="igual" {% if filtros_aplicados.horas_comparacion == 'igual' %}selected{% endif %}>Igual a</option>
+                        <option value="mayor_igual" {% if filtros_aplicados.horas_comparacion == 'mayor_igual' %}selected{% endif %}>Mayor o igual que</option>
+                        <option value="menor_igual" {% if filtros_aplicados.horas_comparacion == 'menor_igual' %}selected{% endif %}>Menor o igual que</option>
+                    </select>
+                </div>
+        
+                <div class="filter-container_fechainicio">
+                    <label for="fecha_inicio">Fecha de Inicio:</label><br>
+                    <input type="date" id="fecha_inicio" name="fecha_inicio" value="{{ filtros_aplicados.fecha_inicio }}">
+                </div>
+                
+                <div class="filter-container_fechafin">
+                    <label for="fecha_fin">Fecha de Fin:</label><br>
+                    <input type="date" id="fecha_fin" name="fecha_fin" value="{{ filtros_aplicados.fecha_fin }}">
+                </div>
+                
+                <hr>
+
+                <button type="submit">Filtrar</button>
+                <button type="submit" name="reset" value="1">Limpiar/Refrescar</button>
+                <hr>
+                <button type="button" onclick="window.print()">Imprimir</button>
+                <button type="submit" name="exportar_excel" value="1">Exportar a Excel</button>
+            </form>
+        </div>
+        
+
+        <div class="filter-result">
+            <h3>Filtros Aplicados</h3>
+
+            <hr>
+            <br>
+
+            <ul>
+                {% if filtros_aplicados.trabajador %}
+                    <li>
+                        <strong>Trabajador:</strong> {{ filtros_aplicados.trabajador.ID_trabajador }} - 
+                        {{ filtros_aplicados.trabajador.nombre_trabajador }} 
+                        {{ filtros_aplicados.trabajador.apellido1_trabajador }} 
+                        {% if filtros_aplicados.trabajador.apellido2_trabajador %}
+                            {{ filtros_aplicados.trabajador.apellido2_trabajador }}
+                        {% endif %}
+                    </li>
+                {% endif %}
+                {% if filtros_aplicados.proyecto %}
+                    <li>
+                        <strong>Proyecto:</strong> {{ filtros_aplicados.proyecto.ID_proyecto }} - 
+                        {{ filtros_aplicados.proyecto.numero_proyecto }} - 
+                        {{ filtros_aplicados.proyecto.cliente_proyecto }} - 
+                        {{ filtros_aplicados.proyecto.nombre_proyecto }}
+                    </li>
+                {% endif %}
+                {% if filtros_aplicados.tarea %}
+                    <li><strong>Tarea:</strong> {{ filtros_aplicados.tarea }}</li>
+                {% endif %}
+                {% if filtros_aplicados.fecha_inicio %}
+                    <li><strong>Fecha de Inicio:</strong> {{ filtros_aplicados.fecha_inicio }}</li>
+                {% endif %}
+                {% if filtros_aplicados.fecha_fin %}
+                    <li><strong>Fecha de Fin:</strong> {{ filtros_aplicados.fecha_fin }}</li>
+                {% endif %}
+                {% if filtros_aplicados.horas %}
+                    <li><strong>Horas:</strong> {{ filtros_aplicados.horas }} 
+                        ({{ filtros_aplicados.horas_comparacion | replace("_", " ") }})
+                    </li>
+                {% endif %}
+                
+                {% if not filtros_aplicados.trabajador and not filtros_aplicados.proyecto and not filtros_aplicados.tarea and not filtros_aplicados.fecha_inicio and not filtros_aplicados.fecha_fin and not filtros_aplicados.horas %}
+                    <li>No se han aplicado filtros</li>
+                {% endif %}
+            </ul>
+
+            <br>
+            <hr>
+
+            <p>Número de Registros Mostrados: {{ num_registros }}</p>
+            <p>Horas Totales: {{ '%.2f' % total_horas }}</p>
+        </div>
+        
+        
+
+    </div>    
+
+
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Tarea</th>
+                    <th>Fecha y Hora</th>
+                    <th>Trabajador</th>
+                    <th>Proyecto</th>
+                    <th>Tarea</th>
+                    <th>Horas</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registro in registros %}
+                <tr>
+                    <td>{{ registro.ID_tarea }}</td>
+                    <td>{{ registro.fecha_hora }}</td>
+                    <td>{{ registro.trabajador.nombre_trabajador }} {{ registro.trabajador.apellido1_trabajador }}</td>
+                    <td>{{ registro.proyecto.numero_proyecto }} - {{ registro.proyecto.cliente_proyecto }} - {{ registro.proyecto.nombre_proyecto }}</td>
+                    <td>{{ registro.tarea }}</td>
+                    <td>{{ registro.horas }}</td>
+                    <td>
+                        <form class="edit-button" action="{{ url_for('editar_registro', id=registro.ID_tarea) }}" method="get">
+                            <button type="submit">Editar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

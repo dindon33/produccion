@@ -1,0 +1,72 @@
+<!-- app/templates/gestionar_proyectos.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="visor_registros">
+
+    <div class="filter">
+        <div class="filter-container">
+            <h3>Agregar Nuevo Proyecto</h3>
+            <form method="POST" action="{{ url_for('gestionar_proyectos') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <div>
+                    <label for="numero_proyecto">Número del Proyecto:</label>
+                    <input type="text" id="numero_proyecto" name="numero_proyecto" placeholder="Requerido" required>
+                </div>
+                <div>
+                    <label for="cliente_proyecto">Cliente:</label>
+                    <input type="text" id="cliente_proyecto" name="cliente_proyecto" placeholder="Requerido" required>
+                </div>
+                <div>
+                    <label for="nombre_proyecto">Nombre del Proyecto:</label>
+                    <input type="text" id="nombre_proyecto" name="nombre_proyecto" placeholder="Requerido" required>
+                </div>
+                <div>
+                    <label for="descripcion_proyecto">Descripción:</label>
+                    <input type="text" id="descripcion_proyecto" name="descripcion_proyecto" placeholder="Opcional">
+                </div>
+                <hr>
+                <button type="submit">Agregar Proyecto</button>
+            </form>
+        </div>
+
+        <div class="filter-result">
+            <!-- Contenido de resultados del filtro aquí (por definir) -->
+        </div>
+    </div>
+
+    <div class="table-container">
+        <h3>Proyectos Activos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Proyecto</th>
+                    <th>Número Proyecto</th>
+                    <th>Cliente</th>
+                    <th>Nombre Proyecto</th>
+                    <th>Descripción Proyecto</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for proyecto in proyectos %}
+                <tr>
+                    <td>{{ proyecto.ID_proyecto }}</td>
+                    <td>{{ proyecto.numero_proyecto }}</td>
+                    <td>{{ proyecto.cliente_proyecto }}</td>
+                    <td>{{ proyecto.nombre_proyecto }}</td>
+                    <td>{{ proyecto.descripcion_proyecto }}</td>
+                    <td>
+                        <form class="edit-button" action="{{ url_for('editar_proyecto', id=proyecto.ID_proyecto) }}" method="get">
+                            <button type="submit">Editar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+<!-- app/templates/gestionar_trabajadores.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="visor_registros">
+
+    <div class="filter">
+        <div class="filter-container">
+            <h3>Agregar Nuevo Trabajador</h3>
+            <form method="POST" action="{{ url_for('gestionar_trabajadores') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <div>
+                    <label for="nombre_trabajador">Nombre:</label>
+                    <input type="text" id="nombre_trabajador" name="nombre_trabajador" placeholder="Requerido" required>
+                </div>
+                <div>
+                    <label for="apellido1_trabajador">Apellido 1:</label>
+                    <input type="text" id="apellido1_trabajador" name="apellido1_trabajador" placeholder="Requerido" required>
+                </div>
+                <div>
+                    <label for="apellido2_trabajador">Apellido 2:</label>
+                    <input type="text" id="apellido2_trabajador" name="apellido2_trabajador" placeholder="Opcional">
+                </div>
+                <hr>
+                <button type="submit">Agregar Trabajador</button>
+            </form>
+        </div>
+
+        <div class="filter-result">
+            <!-- Contenido de resultados del filtro aquí (por definir) -->
+        </div>
+    </div>
+
+    <div class="table-container">
+        <h3>Trabajadores Activos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Trabajador</th>
+                    <th>PIN Trabajador</th>
+                    <th>Nombre</th>
+                    <th>Apellido 1</th>
+                    <th>Apellido 2</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trabajador in trabajadores %}
+                <tr>
+                    <td>{{ trabajador.ID_trabajador }}</td>
+                    <td>{{ trabajador.PIN_trabajador }}</td>
+                    <td>{{ trabajador.nombre_trabajador }}</td> 
+                    <td>{{ trabajador.apellido1_trabajador }}</td>
+                    <td>{{ trabajador.apellido2_trabajador }}</td>
+                    <td>
+                        <form class="edit-button" action="{{ url_for('editar_trabajador', id=trabajador.ID_trabajador) }}" method="get">
+                            <button type="submit">Editar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+<!-- app/templates/historial_trabajadores.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="table-container">
+    <h3>Trabajadores Eliminados</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Trabajador</th>
+                <th>Nombre</th>
+                <th>Primer Apellido</th>
+                <th>Segundo Apellido</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trabajador in trabajadores %}
+            <tr>
+                <td>{{ trabajador.ID_trabajador }}</td>
+                <td>{{ trabajador.nombre_trabajador }}</td>
+                <td>{{ trabajador.apellido1_trabajador }}</td>
+                <td>{{ trabajador.apellido2_trabajador }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('recuperar_trabajador', id=trabajador.ID_trabajador) }}" onsubmit="return confirm('¿Estás seguro de que deseas recuperar este trabajador?');">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit">Recuperar Trabajador</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

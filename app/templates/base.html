@@ -1,0 +1,65 @@
+<!-- app/templates/base.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Mi Aplicación</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo de la Aplicación" class="logo">
+            <h1>Control de Producción</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">Inicio</a></li>
+        
+                {% if 'usuario_id' not in session %}
+                <li><a href="{{ url_for('login') }}" class="{% if request.endpoint == 'login' %}active{% endif %}">Iniciar Sesión</a></li>
+                {% endif %}
+        
+                <li><a href="{{ url_for('registro_tarea') }}" class="{% if request.endpoint == 'registro_tarea' %}active{% endif %}">Registrar Tarea</a></li>
+                
+                {% if session['rol'] == 'trabajador' %}
+                <li><a href="{{ url_for('logout') }}" class="delete-button">Logout</a></li>
+                {% endif %}
+        
+                {% if session['rol'] == 'jefe_taller' %}
+                <li><a href="{{ url_for('visor_registros') }}" class="{% if request.endpoint == 'visor_registros' %}active{% endif %}">Área Privada</a></li>
+                <li><a href="{{ url_for('gestionar_trabajadores') }}" class="{% if request.endpoint == 'gestionar_trabajadores' %}active{% endif %}">Gestionar Trabajadores</a></li>
+                <li><a href="{{ url_for('gestionar_proyectos') }}" class="{% if request.endpoint == 'gestionar_proyectos' %}active{% endif %}">Gestionar Proyectos</a></li>
+                <li><a href="{{ url_for('gestionar_usuarios') }}" class="{% if request.endpoint == 'gestionar_usuarios' %}active{% endif %}">Gestionar Usuarios</a></li>
+                <li><a href="{{ url_for('historial_registros') }}" class="{% if request.endpoint == 'historial_registros' %}active{% endif %}">Historial de Registros Eliminados</a></li>
+                <li><a href="{{ url_for('historial_trabajadores') }}" class="{% if request.endpoint == 'historial_trabajadores' %}active{% endif %}">Historial de Trabajadores Eliminados</a></li>
+                <li><a href="{{ url_for('historial_proyectos') }}" class="{% if request.endpoint == 'historial_proyectos' %}active{% endif %}">Historial de Proyectos Eliminados</a></li>
+                <li><a href="{{ url_for('logout') }}" class="delete-button">Logout</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}"> 
+                            {{ message|safe }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 WEQREA</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!-- app/templates/editar_trabajador.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <form method="POST" onsubmit="return confirm('¿Estás seguro de que deseas editar este trabajador?');">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div>
+            <label for="nombre_trabajador">Nombre:</label>
+            <input type="text" id="nombre_trabajador" name="nombre_trabajador" value="{{ trabajador.nombre_trabajador }}" placeholder="Requerido" required>
+        </div>
+
+        <div>
+            <label for="apellido1_trabajador">Primer Apellido:</label>
+            <input type="text" id="apellido1_trabajador" name="apellido1_trabajador" value="{{ trabajador.apellido1_trabajador }}" placeholder="Requerido" required>
+        </div>
+
+        <div>
+            <label for="apellido2_trabajador">Segundo Apellido:</label>
+            <input type="text" id="apellido2_trabajador" name="apellido2_trabajador" value="{{ trabajador.apellido2_trabajador }}"placeholder="Opcional" >
+        </div>
+       
+        <hr>
+
+        <button type="submit">Actualizar Trabajador</button>
+    </form>
+
+    <form class= "delete-button" method="POST" action="{{ url_for('eliminar_trabajador', id=trabajador.ID_trabajador) }}" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este trabajador?');">
+        <button type="submit">Eliminar Trabajador</button>
+    </form>
+
+    <hr>
+
+    <a href="{{ url_for('gestionar_trabajadores') }}">
+        <button type="button">Volver</button>
+    </a>
+</div>
+{% endblock %}

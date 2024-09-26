@@ -1,0 +1,56 @@
+<!-- app/templates/editar_registro.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <form method="POST" onsubmit="return confirm('¿Estás seguro de que deseas editar este registro?');">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div>
+            <label for="id_trabajador">Selecciona Trabajador:</label>
+            <select id="id_trabajador" name="id_trabajador" required>
+                {% for trabajador in trabajadores %}
+                    <option value="{{ trabajador.ID_trabajador }}" {% if trabajador.ID_trabajador == registro.ID_trabajador %}selected{% endif %}>
+                        {{ trabajador.ID_trabajador }} - {{ trabajador.nombre_trabajador }} {{ trabajador.apellido1_trabajador }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="id_proyecto">Selecciona Proyecto:</label>
+            <select id="id_proyecto" name="id_proyecto" required>
+                {% for proyecto in proyectos %}
+                    <option value="{{ proyecto.ID_proyecto }}" {% if proyecto.ID_proyecto == registro.ID_proyecto %}selected{% endif %}>
+                        {{ proyecto.ID_proyecto }} - {{ proyecto.numero_proyecto }} - {{ proyecto.cliente_proyecto }} - {{ proyecto.nombre_proyecto }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="tarea">Tarea Efectuada:</label>
+            <input type="text" id="tarea" name="tarea" value="{{ registro.tarea }}" placeholder="Requerido" required>
+        </div>
+
+        <div>
+            <label for="horas">Horas Efectuadas:</label>
+            <input type="number" step="0.01" id="horas" name="horas" value="{{ registro.horas }}" placeholder="Requerido" required>
+        </div>
+        
+        <hr>
+
+        <button type="submit">Editar Registro</button>
+    </form>
+
+    <form class= "delete-button" method="POST" action="{{ url_for('eliminar_registro', id=registro.ID_tarea) }}" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
+        <button type="submit">Eliminar Registro</button>
+    </form>
+
+    <hr>
+
+    <a href="{{ url_for('visor_registros') }}">
+        <button type="button">Volver</button>
+    </a>
+</div>
+{% endblock %}

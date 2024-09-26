@@ -1,0 +1,66 @@
+<!-- app/templates/gestionar_usuarios.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="visor_registros">
+
+    <div class="filter">
+        <div class="filter-container">
+            <h3>Agregar Nuevo Usuario</h3>
+            <form method="POST" action="{{ url_for('gestionar_usuarios') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <div>
+                    <label for="nombre_usuario">Nombre de Usuario:</label>
+                    <input type="text" id="nombre_usuario" name="nombre_usuario" placeholder="Requerido" required>
+                </div>
+                <div>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" placeholder="Requerido" required>
+                </div>
+                <div>
+                    <label for="rol">Rol:</label>
+                    <select id="rol" name="rol">
+                        <option value="trabajador">Trabajador</option>
+                        <option value="jefe_taller">Jefe de Taller</option>
+                    </select>
+                </div>
+                <hr>
+                <button type="submit">Agregar Usuario</button>
+            </form>
+        </div>
+
+        <div class="filter-result">
+            <!-- Contenido de resultados del filtro aquí (por definir) -->
+        </div>
+    </div>
+
+    <div class="table-container">
+        <h3>Usuarios Activos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre de Usuario</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.nombre_usuario }}</td>
+                    <td>{{ usuario.rol }}</td>
+                    <td>
+                        <form class="edit-button" action="{{ url_for('editar_usuario', id=usuario.ID_usuario) }}" method="get">
+                            <button type="submit">Editar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

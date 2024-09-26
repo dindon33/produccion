@@ -1,0 +1,44 @@
+<!-- app/templates/editar_proyecto.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <form method="POST" onsubmit="return confirm('¿Estás seguro de que deseas editar este proyecto?');">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div>
+            <label for="nombre_proyecto">Nombre del Proyecto:</label>
+            <input type="text" id="nombre_proyecto" name="nombre_proyecto" value="{{ proyecto.nombre_proyecto }}" placeholder="Requerido" required>
+        </div>
+
+        <div>
+            <label for="cliente_proyecto">Cliente:</label>
+            <input type="text" id="cliente_proyecto" name="cliente_proyecto" value="{{ proyecto.cliente_proyecto }}" placeholder="Requerido" required>
+        </div>
+
+        <div>
+            <label for="numero_proyecto">Número del Proyecto:</label>
+            <input type="text" id="numero_proyecto" name="numero_proyecto" value="{{ proyecto.numero_proyecto }}" placeholder="Requerido" required>
+        </div>
+
+        <div>
+            <label for="descripcion_proyecto">Descripción del Proyecto:</label>
+            <input type="text" id="descripcion_proyecto" name="descripcion_proyecto" value="{{ proyecto.descripcion_proyecto }}" placeholder="Opcional">
+        </div>
+
+        <hr>
+
+        <button type="submit">Actualizar Proyecto</button>
+    </form>
+
+    <form class= "delete-button" method="POST" action="{{ url_for('eliminar_proyecto', id=proyecto.ID_proyecto) }}" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este proyecto?');">
+        <button type="submit">Eliminar Proyecto</button>
+    </form>
+
+    <hr>
+
+    <a href="{{ url_for('gestionar_proyectos') }}">
+        <button type="button">Volver</button>
+    </a>
+</div>
+{% endblock %}

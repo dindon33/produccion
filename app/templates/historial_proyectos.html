@@ -1,0 +1,37 @@
+<!-- app/templates/historial_proyectos.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="table-container">
+    <h3>Proyectos Eliminados</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Proyecto</th>
+                <th>Número Proyecto</th>
+                <th>Cliente</th>
+                <th>Nombre Proyecto</th>
+                <th>Descripción Proyecto</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proyecto in proyectos %}
+            <tr>
+                <td>{{ proyecto.ID_proyecto }}</td>
+                <td>{{ proyecto.numero_proyecto }}</td>
+                <td>{{ proyecto.cliente_proyecto }}</td>
+                <td>{{ proyecto.nombre_proyecto }}</td>
+                <td>{{ proyecto.descripcion_proyecto }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('recuperar_proyecto', id=proyecto.ID_proyecto) }}" onsubmit="return confirm('¿Estás seguro de que deseas recuperar este proyecto?');">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit">Recuperar Proyecto</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
