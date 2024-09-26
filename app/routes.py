@@ -50,7 +50,7 @@ def register_routes(app):
             # Buscar usuario en la base de datos
             usuario = Usuario.query.filter_by(nombre_usuario=username).first()
 
-            if usuario and bcrypt.checkpw(password.encode('utf-8'), usuario.password.encode('utf-8')):
+            if usuario and check_password_hash(usuario.password, password):  # Uso de check_password_hash
                 # Almacenar información del usuario en la sesión
                 session['usuario_id'] = usuario.ID_usuario
                 session['rol'] = usuario.rol  # Guardar el rol en la sesión
@@ -74,7 +74,6 @@ def register_routes(app):
         return redirect(url_for('login'))
 
     @app.route('/gestionar_usuarios', methods=['GET', 'POST'])
-    @login_required
     def gestionar_usuarios():
         if request.method == 'POST':
             nombre_usuario = request.form['nombre_usuario']
@@ -82,11 +81,11 @@ def register_routes(app):
             rol = request.form['rol']
 
             # Encriptar la contraseña antes de guardarla
-            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+            hashed_password = generate_password_hash(password)  # Uso de generate_password_hash
 
             nuevo_usuario = Usuario(
                 nombre_usuario=nombre_usuario,
-                password=hashed_password.decode('utf-8'),  # Guardar la contraseña encriptada
+                password=hashed_password,  # Guardar la contraseña encriptada
                 rol=rol
             )
             db.session.add(nuevo_usuario)
@@ -99,7 +98,6 @@ def register_routes(app):
         
 
     @app.route('/editar_usuario/<int:id>', methods=['GET', 'POST'])
-    @login_required
     def editar_usuario(id):
         usuario = Usuario.query.get_or_404(id)
 
@@ -108,8 +106,9 @@ def register_routes(app):
             rol = request.form['rol']
             usuario.rol = rol
 
-            if request.form['password']:  # Si se proporciona una nueva contraseña, actualizarla
-                usuario.password = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+            # Si se proporciona una nueva contraseña, actualizarla
+            if request.form['password']:
+                usuario.password = generate_password_hash(request.form['password'])  # Uso de generate_password_hash
 
             db.session.commit()
             flash('Usuario actualizado con éxito', 'success')

@@ -31,6 +31,7 @@
     </form>
 
     <form class="delete-button" method="POST" action="{{ url_for('eliminar_usuario', id=usuario.ID_usuario) }}" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <button type="submit">Eliminar Usuario</button>
     </form>
 
